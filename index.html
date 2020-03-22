@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+	<meta http-equiv="Content-Type" content="text/html">
+	
+	<title>AngularJS weather app</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.9/css/weather-icons.min.css">
+	<link rel="stylesheet" type="text/css" href="./style.css">
+</head>
+<body ng-app="myStation">
+
+	<main ng-controller="myCtrl">
+		<!-- <h1>Weather in {{loc.city.name}}, {{loc.city.country}}</h1> -->
+		<div id="topleft">
+			<h1>{{todaysdate | date:'h:mma'}}</h1>
+		</div>
+		<div id="topright">
+			<h4>{{todaysdate | date:'EEEE dd MMM yyyy'}}</h4>
+			<p>
+				<i class="wi wi-sunrise em"></i> {{forecast[0].sunrise*1000 | date:'h:mma'}}
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				<i class="wi wi-sunset em"></i> {{forecast[0].sunset*1000 | date:'h:mma'}}
+			</p>
+		</div>
+		<br clear="all">
+		<section class="forecast">
+			<div ng-repeat="day in forecast">
+				{{day.dt *1000 | date: 'EEE'}}
+				<br><i class="wi em" ng-class="getClass(day.weather[0].id)"></i>
+				<br>{{day.weather[0].main}}
+				<span ng-hide="checked" class="em"><br>{{day.temp.day | number: 0}}&deg;C</span>
+				<br>{{day.humidity}}%
+				<span ng-hide="checked"><br>{{day.speed | number: 0}} kh</span>
+			</div>
+		</section>
+
+		<marquee scrollamount="5">
+			<span ng-repeat="article in articles">
+				{{article.title}} 
+				<i class="wi wi-windy em"></i> 
+			</span>
+		</marquee>
+
+		<marquee scrollamount="5">
+			<span ng-repeat="(key, value) in corona" class="coronaTracker">
+				{{key}}: {{value}} 
+				<i class="wi wi-windy em"></i> 
+			</span>
+		</marquee>
+
+	</main>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.8/angular.min.js"></script>
+	<script src="./script.js"></script>
+
+</body>
+</html>
