@@ -63,6 +63,8 @@ myStation.controller('myCtrl', function(updateInterval, $scope, $interval, getWe
 	}
 
 	let getApisData = function() {
+		let today = new Date();
+		$scope.updateTime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 		getWeatherData.event().then(function(data, status)	{
 			$scope.forecast = data.data.list;
 		});
