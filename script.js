@@ -44,20 +44,40 @@ myStation.factory('getNewsData', function(countryCode, newsApiKey, $http) {
 	};
 });
 
-myStation.factory('getCorona', function(countryName, $http){
-	let getCorona = function() {
+myStation.factory('getCoronaCountry', function(countryName, $http){
+	let getCoronaCountry = function() {
 		return $http({
 			url: 'https://corona.lmao.ninja/Countries/' + countryName
 		});
 	};
 	return {
 		event: function() {
-			return getCorona();
+			return getCoronaCountry();
 		}
 	};
 });
 
-myStation.controller('myCtrl', function(updateInterval, $scope, $interval, getWeatherData, getNewsData, getCorona){
+myStation.factory('getCoronaAll', function(countryName, $http){
+	let getCoronaAll = function() {
+		return $http({
+			url: 'https://corona.lmao.ninja/all'
+		});
+	};
+	return {
+		event: function() {
+			return getCoronaAll();
+		}
+	};
+});
+
+myStation.controller('myCtrl', 
+	function(updateInterval, 
+			$scope, 
+			$interval, 
+			getWeatherData, 
+			getNewsData, 
+			getCoronaCountry, 
+			getCoronaAll){
 	let updateTime = function() {
 		$scope.todaysdate = Date.now();
 	}
@@ -73,8 +93,12 @@ myStation.controller('myCtrl', function(updateInterval, $scope, $interval, getWe
 			$scope.articles = data.data.articles;
 		});
 
-		getCorona.event().then(function(data, status) {
-			$scope.corona = data.data;
+		getCoronaCountry.event().then(function(data, status) {
+			$scope.coronaCountry = data.data;
+		});
+
+		getCoronaAll.event().then(function(data, status) {
+			$scope.coronaAll = data.data;
 		});
 	}
 

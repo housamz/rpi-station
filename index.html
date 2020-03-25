@@ -42,9 +42,15 @@
 			</span>
 		</marquee>
 
+		{{corona}}
+
 		<marquee scrollamount="5">
 			<span>Last update: {{updateTime}} <i class="wi wi-windy em"></i> </span>
-			<span ng-repeat="(key, value) in corona" ng-if="key != 'countryInfo'" class="coronaTracker">
+			<span ng-repeat="(key, value) in coronaAll" ng-if="key != 'updated'" class="coronaTracker">
+				All {{key}}: {{value}} 
+				<i class="wi wi-windy em"></i> 
+			</span>
+			<span ng-repeat="(key, value) in coronaCountry" ng-if="key != 'countryInfo' && key != 'updated'" class="coronaTracker">
 				{{key}}: {{value}} 
 				<i class="wi wi-windy em"></i> 
 			</span>
